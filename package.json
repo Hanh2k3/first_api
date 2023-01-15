@@ -1,0 +1,25 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "learn api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hanh2k3/first_api.git"
+  },
+  "author": "le hanh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hanh2k3/first_api/issues"
+  },
+  "homepage": "https://github.com/Hanh2k3/first_api#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20"
+  }
+}
