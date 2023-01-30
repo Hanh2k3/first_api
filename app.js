@@ -2,7 +2,7 @@ const express = require('express')
 const logger = require('morgan')
 
 
-
+const routesUser = require('./routes/user') 
 
 
 const app = express()
@@ -11,12 +11,12 @@ const app = express()
 app.use(logger('dev')) // in ra số giấy của một request
 
 // Routes
+app.use('/users', routesUser) 
 app.get('/', (req, res) => {
     return res.status(200).json({
-        message: 'server is ok'
+        message: 'server is ok!'
     })
 })
-
 
 
 // catch 404 errors and forward the to error (bắt lỗi)
@@ -25,6 +25,8 @@ app.use((req, res, next) =>  {
     err.status = 404
     next(err)
 })
+
+
 // Error handler function
 app.use(() => {
     const error = app.get('env') === 'development' ?err : {}
@@ -37,7 +39,6 @@ app.use(() => {
         }
     })
 })
-
 
 
 // Start server 
