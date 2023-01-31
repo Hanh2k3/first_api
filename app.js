@@ -1,5 +1,7 @@
 const express = require('express')
 const logger = require('morgan')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
 
 const routesUser = require('./routes/user') 
@@ -7,8 +9,21 @@ const routesUser = require('./routes/user')
 
 const app = express()
 
+app.use(express.json())
+
+// setup connect to mongoDB by mongoose
+mongoose.connect('mongodb://localhost/api', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => console.log('connected successfully'))
+  .catch(err => console.log(err))
+
 // Middleware 
 app.use(logger('dev')) // in ra số giấy của một request
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+
 
 // Routes
 app.use('/users', routesUser) 
