@@ -1,20 +1,17 @@
+const User = require("../models/User");
 
-const User = require('../models/User')
+const index = async (req, res) => {
+    const users = await User.find({});
+    return res.json(users);
+};
 
-const index = (req, res) => {
-    return res.json({
-        message: 'Router success'
-    })
-}
-
-const createUser = (req, res, next) => {
-    console.log(req.body)
-    // const newUser = req.body 
-    // console.log(newUser)
-  
-}
+const createUser = async (req, res, next) => {
+    const newUser = new User(req.body);
+    await newUser.save();
+    return res.json(newUser);
+};
 
 module.exports = {
-    index, 
-    createUser
-}
+    index,
+    createUser,
+};
