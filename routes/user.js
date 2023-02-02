@@ -1,5 +1,6 @@
 const app = require('express')
 const router = require('express-promise-router')()
+const {validateBody, validateParam, schema, userSchema, optionSchema, deckSchema } = require('../helpers/routeHelpers')
 
 
 const userController = require('../controllers/user')
@@ -7,17 +8,17 @@ const userController = require('../controllers/user')
 
 router.route('/')
     .get(userController.index)
-    .post(userController.createUser)
+    .post(validateBody(userSchema),userController.createUser)
 
 router.route('/:userId')
-    .get(userController.getUser)
-    .put(userController.replaceUser)
-    .patch(userController.updateUser)
+    .get(validateParam(schema, 'userId'),userController.getUser)
+    .put(validateParam(schema, 'userId'),validateBody(userSchema), userController.replaceUser)
+    .patch(validateParam(schema, 'userId'),validateBody(optionSchema),userController.updateUser)
 
 
 router.route('/:userId/decks')
-    .post(userController.createUserDeck)
-    .get(userController.getUserDecks)
+    .post(validateParam(schema, 'userId'), validateBody(deckSchema),userController.createUserDeck)
+    .get(validateParam(schema, 'userId'),userController.getUserDecks)
 
 
     

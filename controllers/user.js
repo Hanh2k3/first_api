@@ -1,14 +1,14 @@
 const Deck = require('../models/Deck')
 const User = require("../models/User")
-
 const index = async (req, res) => {
     const users = await User.find({});
     return res.json(users);
 }
 
 const getUser = async (req, res) => {
-    const {userId} = req.params
-    const user = await User.findById(userId)
+    const {userId} = req.params   
+    const user = await User.findOne({userId: userId})
+    console.log(user)
     return res.status(200).json(user)
 }
 
@@ -19,6 +19,7 @@ const getUserDecks = async (req, res, next) => {
    // get deck of user 
     const listDeck = await User.findById(userId).populate('decks')
 
+    
    return res.status(200).json({listDeck: listDeck.decks})    
 }
 
