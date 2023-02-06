@@ -5,23 +5,9 @@ const index = async (req, res) => {
     return res.json(users);
 }
 
-const getUser = async (req, res) => {
-    const {userId} = req.params   
-    const user = await User.findOne({userId: userId})
-    console.log(user)
-    return res.status(200).json(user)
-}
 
-const getUserDecks = async (req, res, next) => {
-    const { userId } = req.params
-  
-   
-   // get deck of user 
-    const listDeck = await User.findById(userId).populate('decks')
 
-    
-   return res.status(200).json({listDeck: listDeck.decks})    
-}
+
 
 const createUser = async (req, res, next) => {
     const newUser = new User(req.body);
@@ -52,6 +38,24 @@ const createUserDeck = async (req, res, next) => {
 
 }
 
+const getUserDecks = async (req, res, next) => {
+    const { userId } = req.params
+  
+   
+   // get deck of user 
+    const listDeck = await User.findById(userId).populate('decks')
+
+    
+   return res.status(200).json({listDeck: listDeck.decks})    
+}
+
+const getUser = async (req, res) => {
+    const {userId} = req.params   
+    const user = await User.findOne({userId: userId})
+    console.log(user)
+    return res.status(200).json(user)
+}
+
 const replaceUser = async (req, res, next) => {
     const { userId } = req.params 
     const userUpdate = req.body
@@ -60,6 +64,20 @@ const replaceUser = async (req, res, next) => {
     return res.json({
         "message": "Update successful"
     })
+}
+
+const signIn = async (req, res, next) => {
+    console.log('to sign in')
+
+}
+
+const signUp = async (req, res, next) => {
+    console.log('to sign up')
+
+}
+
+const secret = async (req, res, next) => {
+    console.log('to secret')
 }
 
 const updateUser = async (req, res, next) => {
@@ -75,12 +93,15 @@ const test = (req, res) => {
     console.log('test')
 }
 module.exports = {
-    index,
     createUser,
     createUserDeck,
-    replaceUser, 
-    updateUser,
+    index,
     getUser,
     getUserDecks,
+    replaceUser, 
+    signIn,
+    signUp,
+    secret,
+    updateUser,
     test
 }

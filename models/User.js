@@ -9,8 +9,15 @@ const UserSchema = new Schema({
         type: String
     },
     email: {
-        type: String
+        type: String,
+        required: true,
+        unique: true,
     }, 
+    password: {
+        type: String,
+        required: true,
+        minimum: 8,
+    },
     decks: [{
         type: Schema.Types.ObjectId, 
         ref: 'Deck'
