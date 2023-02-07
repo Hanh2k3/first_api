@@ -1,13 +1,13 @@
 const Deck = require('../models/Deck')
 const User = require("../models/User")
 const JWT = require('jsonwebtoken')
+const { JWT_SECRET } = require('../configs/index')
 
 
 const index = async (req, res) => {
     const users = await User.find({});
     return res.json(users);
 }
-
 
 const endCode = (userId) => {
    const token =  JWT.sign({
@@ -16,7 +16,7 @@ const endCode = (userId) => {
         iat: new Date().getTime(),
         exp: new Date().setDate(new Date().getDate() + 3),
 
-   }, 'AuthenticationJWT')
+   }, JWT_SECRET)
 
    return token 
 
@@ -90,17 +90,16 @@ const signUp = async (req, res, next) => {
     await newUser.save()
     const token = endCode(newUser._id)
 
-    res.setHeader('AuthenticationJWT', token)
+    res.setHeader('Authorization', token)
     return res.status(201).json({
-        token :token,
         message: 'Sign up user success !'
     })
-
-
 }
 
 const secret = async (req, res, next) => {
-    console.log('to secret')
+    return res.status(200).json({
+        resource : "True"
+    })
 }
 
 const updateUser = async (req, res, next) => {
