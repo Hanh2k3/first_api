@@ -81,7 +81,7 @@ const replaceUser = async (req, res, next) => {
 }
 
 const signIn = async (req, res, next) => {
-    console.log('to sign in')
+    return res.json({success: 'login success'})
 
 }
 

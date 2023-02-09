@@ -18,15 +18,12 @@ router.route('/:userId')
     .patch(validateParam(schemas.schema, 'userId'),validateBody(schemas.optionSchema),userController.updateUser)
 
 
-router.route('/signIn').post(validateBody(schemas.signInSchema),userController.signIn)
+router.route('/signIn').post(validateBody(schemas.signInSchema),passport.authenticate('local', {session: false}),userController.signIn)
 router.route('/signUp').post(validateBody(schemas.signUpSchema),userController.signUp)
 router.route('/user/secret').get(passport.authenticate('jwt', {session: false}),userController.secret)
-
 
 router.route('/:userId/decks')
     .post(validateParam(schemas.schema,  'userId'), validateBody(schemas.deckSchema),userController.createUserDeck)
     .get(validateParam(schemas.schema,  'userId'),userController.getUserDecks)
-
-
-    
+   
 module.exports = router
