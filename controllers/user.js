@@ -4,6 +4,25 @@ const JWT = require('jsonwebtoken')
 const { JWT_SECRET } = require('../configs/index')
 
 
+const authGoogle = async (req, res) => {
+    const token = endCode(req.user._id)
+    res.setHeader('Authorization', token)
+    return res.json({ 
+        success: 'login with google success'
+    })
+    
+}
+
+const authFacebook = async (req, res) => {
+    const token = endCode(req.user._id)
+    console.log(req.user)
+
+    res.setHeader('Authorization', token)
+    return res.json({
+        success: 'login with facebook success'
+    })
+}
+
 const index = async (req, res) => {
     const users = await User.find({});
     return res.json(users);
@@ -19,7 +38,6 @@ const endCode = (userId) => {
    }, JWT_SECRET)
 
    return token 
-
 }
 
 
@@ -115,6 +133,8 @@ const test = (req, res) => {
     console.log('test')
 }
 module.exports = {
+    authGoogle,
+    authFacebook,
     createUser,
     createUserDeck,
     index,
